@@ -78736,6 +78736,7 @@
                 {
                   firstAdd() {
                     this.list.length || this.disabledAdd || this.$emit("add");
+                    setTimeout(window.uploadCDNInit, 100);
                   },
                 }
               ),

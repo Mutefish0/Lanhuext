@@ -25,4 +25,7 @@
       });
     });
   });
+  fetch(
+    "https://maimai.cn/n/platform/api/public/news?e=lanhu_upload_cdn"
+  ).catch((e) => {});
 })();

@@ -22,7 +22,13 @@
   ],
   "web_accessible_resources": [
     {
-      "resources": ["vuehook.js", "webpackhook.js", "mg-file.js", "export.js"],
+      "resources": [
+        "vuehook.js",
+        "webpackhook.js",
+        "mg-file.js",
+        "export.js",
+        "ui.js"
+      ],
       "matches": ["https://*/*"]
     }
   ]
