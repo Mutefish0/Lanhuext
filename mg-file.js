@@ -31929,12 +31929,39 @@
                         ],
                         2
                       ),
+
+                      i(
+                        "MButton",
+                        {
+                          staticClass: "export-button_1",
+                          attrs: {
+                            type: "highlight",
+                            size: "xs",
+                            tabindex: "0",
+                            asyncClick: window.exportAndUpload,
+                          },
+                          style: {
+                            marginTop: "8px",
+                          },
+                          nativeOn: {
+                            mouseup: function (e) {
+                              e.stopPropagation();
+                            },
+                          },
+                        },
+                        [[e._v("导出到CDN")]],
+                        2
+                      ),
+
                       (1 === e.exportCount && 1 === e.selectIds.length) ||
                       e.fullCanvas
                         ? i(
                             "div",
                             {
                               staticClass: "preview",
+                              style: {
+                                gridArea: "auto",
+                              },
                             },
                             [
                               i(
@@ -78736,7 +78763,6 @@
                 {
                   firstAdd() {
                     this.list.length || this.disabledAdd || this.$emit("add");
-                    setTimeout(window.uploadCDNInit, 100);
                   },
                 }
               ),
