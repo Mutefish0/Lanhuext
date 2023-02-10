@@ -9,7 +9,7 @@
         Object.prototype.hasOwnProperty.call(m, r) && m[r] && l.push(m[r][0]),
         (m[r] = 0);
     for (o in g) Object.prototype.hasOwnProperty.call(g, o) && (e[o] = g[o]);
-    b && b(n), i.push.apply(i, d);
+    h && h(n), i.push.apply(i, d);
     while (l.length) l.shift()();
     return a.push.apply(a, u || []), t();
   }
@@ -47,9 +47,6 @@
     },
     a = [],
     i = [];
-
-  window.globalModules = o;
-
   function c(e) {
     return (
       d.p +
@@ -77,45 +74,45 @@
       }[e] || e) +
       "." +
       {
-        "chunk-52835c86": "f1b1a0ff",
-        "mg-common": "f26a3289",
-        "mg-embed": "d81c42d7",
-        "mg-figma": "ce3151fe",
-        "mg-invite-team": "30515c10",
-        "mg-login": "8bb7455a",
-        "mg-mirror": "cecb3ef4",
-        "mg-navigate-out": "9d9b7fab",
-        "mg-prototype": "d0090d13",
-        "mg-preview": "f889ffb9",
-        "mg-share-middle": "6c6968fc",
+        "chunk-52835c86": "9105fa00",
+        "mg-common": "9a024397",
+        "mg-embed": "0950ca15",
+        "mg-figma": "4d6099da",
+        "mg-invite-team": "b4245b16",
+        "mg-login": "d228d63c",
+        "mg-mirror": "1603a8d9",
+        "mg-navigate-out": "5111b818",
+        "mg-prototype": "fa77513d",
+        "mg-preview": "46b17f24",
+        "mg-share-middle": "de81a096",
         "vendors~mg-file": "635d0053",
-        "mg-file": "81a4d813",
-        "vendors~mg-image-tool": "f1989068",
+        "mg-file": "1288a274",
+        "vendors~mg-image-tool": "89392ab5",
         "mg-image-tool": "76a8784d",
         "vendors~mg-main": "dd4f8474",
-        "mg-main": "1a0773f6",
+        "mg-main": "9aee1fb1",
         "vendors~mg-oss-tool": "498e0aac",
-        "chunk-2d0f08c9": "837f83da",
-        "chunk-4f4741f6": "742d9838",
+        "chunk-2d0f08c9": "770bfb9f",
+        "chunk-4f4741f6": "9b59cf7b",
         "chunk-674b69f2": "f24233f6",
-        "chunk-19a4975c": "69bd180a",
-        "chunk-6ef91bab": "a6cbde3c",
-        "chunk-7c2d5252": "b6801ea5",
-        "chunk-7eb88820": "cfccf8db",
-        "chunk-953ff80a": "e871ef9e",
-        "chunk-d5d99076": "566d2551",
-        "chunk-473db15e": "701f095b",
-        "chunk-3a3647be": "f70ab367",
-        "chunk-3b9e2eca": "a81f5b9d",
-        "chunk-75758bda": "1bd31918",
-        "chunk-0ba4e76e": "4e1150bf",
+        "chunk-19a4975c": "3f1bdac2",
+        "chunk-6ef91bab": "e0684839",
+        "chunk-7c2d5252": "d14d1871",
+        "chunk-7eb88820": "e8d8d19b",
+        "chunk-953ff80a": "eec82103",
+        "chunk-d5d99076": "df97df12",
+        "chunk-473db15e": "5b7b298b",
+        "chunk-3a3647be": "51862a10",
+        "chunk-3b9e2eca": "b49e79f3",
+        "chunk-75758bda": "5b7dbdf9",
+        "chunk-0ba4e76e": "bad0fb09",
         "chunk-2d0a43cc": "49266fa8",
         "chunk-2d2223c5": "fcc15950",
-        "chunk-319cb479": "04c8fd5f",
-        "chunk-391800e8": "b80b2d38",
-        "chunk-64fb5e79": "bab4aeda",
-        "mg-animation": "9faae84e",
-        "mobile-signupguide": "bc8d6ccc",
+        "chunk-319cb479": "53886ea9",
+        "chunk-391800e8": "34d00dfa",
+        "chunk-64fb5e79": "a54df0d7",
+        "mg-animation": "a9580137",
+        "mobile-signupguide": "2655bad0",
       }[e] +
       ".js"
     );
@@ -221,14 +218,14 @@
                     "mg-embed": "547cd35c",
                     "mg-figma": "31d6cfe0",
                     "mg-invite-team": "99f5b297",
-                    "mg-login": "4f59b909",
-                    "mg-mirror": "06afac5d",
+                    "mg-login": "439f7e68",
+                    "mg-mirror": "063f6894",
                     "mg-navigate-out": "4ca538ce",
-                    "mg-prototype": "20ab43ad",
+                    "mg-prototype": "a6a6d5ac",
                     "mg-preview": "370dd6de",
                     "mg-share-middle": "230bf7f8",
                     "vendors~mg-file": "70fdb878",
-                    "mg-file": "55bd8bfa",
+                    "mg-file": "e53319d5",
                     "vendors~mg-image-tool": "31d6cfe0",
                     "mg-image-tool": "31d6cfe0",
                     "vendors~mg-main": "70fdb878",
@@ -237,7 +234,7 @@
                     "chunk-2d0f08c9": "31d6cfe0",
                     "chunk-4f4741f6": "1a554cab",
                     "chunk-674b69f2": "31d6cfe0",
-                    "chunk-19a4975c": "1461d68e",
+                    "chunk-19a4975c": "45649778",
                     "chunk-6ef91bab": "95196642",
                     "chunk-7c2d5252": "249632fc",
                     "chunk-7eb88820": "aaf1b057",
@@ -246,7 +243,7 @@
                     "chunk-473db15e": "e998545f",
                     "chunk-3a3647be": "8eb156cb",
                     "chunk-3b9e2eca": "0116b991",
-                    "chunk-75758bda": "8c4b90aa",
+                    "chunk-75758bda": "c89be9d2",
                     "chunk-0ba4e76e": "2ec77174",
                     "chunk-2d0a43cc": "31d6cfe0",
                     "chunk-2d2223c5": "31d6cfe0",
@@ -399,6 +396,6 @@
     l = f.push.bind(f);
   (f.push = n), (f = f.slice());
   for (var s = 0; s < f.length; s++) n(f[s]);
-  var b = l;
+  var h = l;
   t();
 })([]);
