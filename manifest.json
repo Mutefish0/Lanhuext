@@ -3,6 +3,12 @@
   "name": "Lanhuext",
   "description": "蓝湖切图工具",
   "version": "1.0",
+  "icons": {
+    "16": "favicon-32x32.png",
+    "32": "favicon-32x32.png",
+    "48": "favicon-32x32.png",
+    "128": "favicon-32x32.png"
+  },
   "action": {
     "default_popup": "popup.html",
     "default_icon": "favicon-32x32.png"
@@ -14,9 +20,6 @@
       "run_at": "document_start"
     }
   ],
-  "background": {
-    "service_worker": "background.js"
-  },
   "web_accessible_resources": [
     {
       "resources": ["vuehook.js", "webpackhook.js", "mg-file.js", "export.js"],

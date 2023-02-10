@@ -32,7 +32,7 @@ function run() {
       "export-button m-button m-button--xs m-button--highlight"
     );
     btn.style.marginTop = "8px";
-    btn.innerHTML = '<span class="m-button__content"> 导出CDN </span>';
+    btn.innerHTML = '<span class="m-button__content"> 导出到CDN </span>';
     btn.onclick = function () {
       execute("./export.js");
     };
