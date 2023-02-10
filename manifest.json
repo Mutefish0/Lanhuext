@@ -1,0 +1,26 @@
+{
+  "manifest_version": 3,
+  "name": "Lanhuext",
+  "description": "蓝湖切图工具",
+  "version": "1.0",
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": "favicon-32x32.png"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://mastergo.com/*"],
+      "js": ["content.js"],
+      "run_at": "document_start"
+    }
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["vuehook.js", "webpackhook.js", "mg-file.js", "export.js"],
+      "matches": ["https://*/*"]
+    }
+  ]
+}
