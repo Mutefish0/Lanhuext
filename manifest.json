@@ -25,5 +25,6 @@
       "resources": ["vuehook.js", "webpackhook.js", "mg-file.js", "ui.js"],
       "matches": ["https://*/*"]
     }
-  ]
+  ],
+  "permissions": ["scripting"]
 }

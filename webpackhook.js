@@ -1,4 +1,7 @@
 (function (e) {
+  if (window["webpackJsonp"]) {
+    return;
+  }
   function n(n) {
     for (
       var o, r, c = n[0], g = n[1], u = n[2], d = n[3] || [], f = 0, l = [];
@@ -74,45 +77,45 @@
       }[e] || e) +
       "." +
       {
-        "chunk-52835c86": "9105fa00",
-        "mg-common": "9a024397",
-        "mg-embed": "0950ca15",
-        "mg-figma": "4d6099da",
-        "mg-invite-team": "b4245b16",
-        "mg-login": "d228d63c",
-        "mg-mirror": "1603a8d9",
-        "mg-navigate-out": "5111b818",
-        "mg-prototype": "fa77513d",
-        "mg-preview": "46b17f24",
-        "mg-share-middle": "de81a096",
+        "chunk-52835c86": "90607349",
+        "mg-common": "b75de546",
+        "mg-embed": "af2b8c6d",
+        "mg-figma": "6d788847",
+        "mg-invite-team": "70618fa7",
+        "mg-login": "054d61ba",
+        "mg-mirror": "212535ad",
+        "mg-navigate-out": "8dd15330",
+        "mg-prototype": "c6f88342",
+        "mg-preview": "c7cfb9f8",
+        "mg-share-middle": "395af9ee",
         "vendors~mg-file": "635d0053",
-        "mg-file": "1288a274",
-        "vendors~mg-image-tool": "89392ab5",
+        "mg-file": "ab84e81a",
+        "vendors~mg-image-tool": "3b4156e2",
         "mg-image-tool": "76a8784d",
         "vendors~mg-main": "dd4f8474",
-        "mg-main": "9aee1fb1",
+        "mg-main": "c3189885",
         "vendors~mg-oss-tool": "498e0aac",
-        "chunk-2d0f08c9": "770bfb9f",
-        "chunk-4f4741f6": "9b59cf7b",
+        "chunk-2d0f08c9": "347f2ace",
+        "chunk-4f4741f6": "0be58244",
         "chunk-674b69f2": "f24233f6",
-        "chunk-19a4975c": "3f1bdac2",
-        "chunk-6ef91bab": "e0684839",
-        "chunk-7c2d5252": "d14d1871",
-        "chunk-7eb88820": "e8d8d19b",
-        "chunk-953ff80a": "eec82103",
-        "chunk-d5d99076": "df97df12",
-        "chunk-473db15e": "5b7b298b",
-        "chunk-3a3647be": "51862a10",
-        "chunk-3b9e2eca": "b49e79f3",
-        "chunk-75758bda": "5b7dbdf9",
-        "chunk-0ba4e76e": "bad0fb09",
+        "chunk-19a4975c": "5fc09e3b",
+        "chunk-6ef91bab": "e491d982",
+        "chunk-7c2d5252": "24f1cbf9",
+        "chunk-7eb88820": "4375aa3f",
+        "chunk-953ff80a": "e1fcf42b",
+        "chunk-d5d99076": "806d4308",
+        "chunk-473db15e": "2b93be1d",
+        "chunk-3a3647be": "3f96e025",
+        "chunk-3b9e2eca": "43c6954d",
+        "chunk-75758bda": "663b5a75",
+        "chunk-0ba4e76e": "251e5287",
         "chunk-2d0a43cc": "49266fa8",
         "chunk-2d2223c5": "fcc15950",
-        "chunk-319cb479": "53886ea9",
-        "chunk-391800e8": "34d00dfa",
-        "chunk-64fb5e79": "a54df0d7",
-        "mg-animation": "a9580137",
-        "mobile-signupguide": "2655bad0",
+        "chunk-319cb479": "39cc2f49",
+        "chunk-391800e8": "5976dfef",
+        "chunk-64fb5e79": "9bd1d962",
+        "mg-animation": "c76bea07",
+        "mobile-signupguide": "3388ac11",
       }[e] +
       ".js"
     );
@@ -144,6 +147,14 @@
       l: !1,
       exports: {},
     });
+
+    const fnStr = o[n].toString();
+
+    if (/Vue\.js v2\.6\.12/.test(fnStr.slice(0, 100))) {
+      fnStr = fnStr.replace("devtools:!1", "devtools:1");
+      o[n] = new Function(`return ${fnStr}`)();
+    }
+
     return e[n].call(t.exports, t, t.exports, d), (t.l = !0), t.exports;
   }
   (d.e = function (e) {
