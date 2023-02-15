@@ -1,5 +1,5 @@
 {
-  "manifest_version": 3,
+  "manifest_version": 2,
   "name": "Lanhuext",
   "description": "蓝湖切图工具",
   "version": "1.0",
@@ -20,11 +20,6 @@
       "run_at": "document_start"
     }
   ],
-  "web_accessible_resources": [
-    {
-      "resources": ["vuehook.js", "webpackhook.js", "mg-file.js", "ui.js"],
-      "matches": ["https://*/*"]
-    }
-  ],
+  "web_accessible_resources": ["webpackhook.js"],
   "permissions": ["scripting"]
 }
