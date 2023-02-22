@@ -150,6 +150,31 @@ function coreInit() {
 
 coreInit();
 
+registerWebpackJsonpCallback("app", function (modules, utils) {
+  for (let key in modules) {
+    let modStr = modules[key].toString();
+    let match;
+    if ((match = /getImageName\((\w)\){/.exec(modStr))) {
+      const index = match.index + match[0].length - 1;
+      const ast = utils.parse(modStr, index);
+      const { startIndex, endIndex } = ast;
+      ast.wraps[0] = ast.wraps[0].replace(
+        "{",
+        `{if(arguments[0].image.name){ return arguments[0].image.name; }`
+      );
+
+      const modified = utils.stringify(ast);
+
+      modStr =
+        modStr.slice(0, startIndex) + modified + modStr.slice(endIndex + 1);
+
+      modules[key] = utils.str2fn(modStr);
+    }
+  }
+
+  return modules;
+});
+
 registerWebpackJsonpCallback("mg-file", function (modules, utils) {
   for (let key in modules) {
     let modStr = modules[key].toString();
@@ -203,6 +228,77 @@ registerWebpackJsonpCallback("mg-file", function (modules, utils) {
 
       modStr =
         modStr.slice(0, startIndex) + modified + modStr.slice(endIndex + 1);
+
+      (function () {
+        let index =
+          modStr.indexOf("get codeString(){") + "get codeString(){".length - 1;
+        const ast = utils.parse(modStr, index);
+        const { startIndex, endIndex } = ast;
+        ast.children[0].body = "";
+        const key = /const (\w)/.exec(ast.wraps[0])[1];
+        ast.wraps[0] += `();console.log('run');${key}.forEach((item) => {
+          const fills = item.fills || [];
+          fills.forEach((fill) => {
+            if (fill.image && fill.image.imageRef) {
+              const ref = fill.image.imageRef;
+              if (window.__upload_image_cache__ && window.__upload_image_cache__[ref]) {
+                fill.image.name = window.__upload_image_cache__[ref];
+              }
+            }
+          });
+        })`;
+        const modified = utils.stringify(ast);
+
+        modStr =
+          modStr.slice(0, startIndex) + modified + modStr.slice(endIndex + 1);
+      })();
+
+      (function () {
+        const index =
+          modStr.indexOf('observe-info__cell h6"},[') +
+          'observe-info__cell h6"},['.length -
+          1;
+
+        const ast = utils.parse(modStr, index);
+
+        const { startIndex, endIndex } = ast;
+
+        ast.wraps[1] = `
+          ,i("MasterButtonIcon", {
+            style: {
+              marginRight:  'auto',
+              marginLeft: '4px'
+            },
+            attrs: {
+              icon: "SelectTopBarIcon",
+              focusable: "",
+            },
+            on: {
+              click: function () {
+                const fills = e.codeTypeMap['css'].codeGenerator.parentProperty.fills;
+                console.log('fills', fills);
+                const queue = [];
+                fills.forEach((fill) => {
+                  if (fill.image && fill.image.imageRef) {
+                    const ref = fill.image.imageRef;
+                    window.__upload_image_cache__ = window.__upload_image_cache__ || {};
+                    if (!window.__upload_image_cache__[ref]) {
+                      queue.push(ref);
+                    }
+                  }
+                });
+                console.log(this.$toast);
+                console.log('queue', queue);
+              }
+            }
+          }),i
+        `;
+
+        const modified = utils.stringify(ast);
+
+        modStr =
+          modStr.slice(0, startIndex) + modified + modStr.slice(endIndex + 1);
+      })();
 
       modules[key] = utils.str2fn(modStr);
     } else if (/getExportList\(\){/.test(modStr)) {
