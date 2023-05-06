@@ -180,9 +180,13 @@ registerWebpackJsonpCallback("mg-file", function (modules, utils) {
     let modStr = modules[key].toString();
 
     if (/right-export-bar/.test(modStr)) {
+      alert(1);
+
       const arrStartIndex =
         modStr.indexOf('right-export-bar"') + 'right-export-bar"'.length;
       const ast = utils.parse(modStr, arrStartIndex);
+
+      console.log(ast);
 
       const { startIndex, endIndex } = ast;
       const [_, preview] = ast.children;
@@ -247,98 +251,6 @@ registerWebpackJsonpCallback("mg-file", function (modules, utils) {
             }
           });
         })`;
-        const modified = utils.stringify(ast);
-
-        modStr =
-          modStr.slice(0, startIndex) + modified + modStr.slice(endIndex + 1);
-      })();
-
-      (function () {
-        const index =
-          modStr.indexOf('observe-info__cell h6"},[') +
-          'observe-info__cell h6"},['.length -
-          1;
-
-        const ast = utils.parse(modStr, index);
-
-        const { startIndex, endIndex } = ast;
-
-        ast.wraps[1] = `
-          ,i("MasterButtonIcon", {
-            style: {
-              marginRight:  'auto',
-              marginLeft: '4px'
-            },
-            attrs: {
-              icon: "SelectTopBarIcon",
-              focusable: "",
-            },
-            on: {
-              click: function () {
-                window.__upload_image_cache__ = window.__upload_image_cache__ || {};
-                const fills = e.codeTypeMap['css'].codeGenerator.parentProperty.fills;
-                
-                const toast = e.$toast({
-                  content: "正在上传...",
-                  persistent: !0,
-                  disabledTransition: !0,
-                  position: "bottom",
-                });
-                
-                const queue = [];
-                fills.forEach((fill) => {
-                  if (fill.image && fill.image.imageRef) {
-                    const ref = fill.image.imageRef;
-                    if (!window.__upload_image_cache__[ref]) {
-                      queue.push(ref);
-                    }
-                  }
-                });
-              
-                const ps = [];
-                for (let u of queue) {
-                  const ou = u;
-                  if (!/\.mini\.png$/.test(u)) {
-                    u = u.replace('.png', '.mini.png');
-                  }
-                  ps.push(
-                    fetch('https://image-resource.mastergo.com/' + u)
-                    .then((resp) => resp.arrayBuffer())
-                    .then((buffer) => {
-                      const formData = new FormData();
-                      formData.append("quality", "0.6-0.8");
-                      formData.append("file", new Blob([buffer]), "export.png");
-                      
-                      fetch(
-                        "https://maimai.cn/n/platform/api/public/news?e=lanhu_code_cdn"
-                      ).catch((e) => {});
-
-                      return fetch("https://growth-bi-service-fe.in.taou.com/upload/cdn/", {
-                        method: "POST",
-                        body: formData,
-                      })
-                      .then((resp) => resp.json())
-                      .then((data) => [ou, data.file]); 
-                    })
-                  );
-                }
-
-                Promise.all(ps).then((rets) => {
-                  for (let ret of rets) {
-                    window.__upload_image_cache__[ret[0]] = ret[1];
-                  }
-                  toast.clearToast();
-                  e.$toast({
-                    content: "上传成功，重新选择后生效",
-                    position: "bottom",
-                  });
-                });
-
-              }
-            }
-          }),i
-        `;
-
         const modified = utils.stringify(ast);
 
         modStr =
