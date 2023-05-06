@@ -180,8 +180,6 @@ registerWebpackJsonpCallback("mg-file", function (modules, utils) {
     let modStr = modules[key].toString();
 
     if (/right-export-bar/.test(modStr)) {
-      alert(1);
-
       const arrStartIndex =
         modStr.indexOf('right-export-bar"') + 'right-export-bar"'.length;
       const ast = utils.parse(modStr, arrStartIndex);
