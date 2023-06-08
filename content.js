@@ -175,7 +175,7 @@ registerWebpackJsonpCallback("app", function (modules, utils) {
   return modules;
 });
 
-registerWebpackJsonpCallback("mg-file", function (modules, utils) {
+registerWebpackJsonpCallback("common-components", function (modules, utils) {
   for (let key in modules) {
     let modStr = modules[key].toString();
 
@@ -230,30 +230,6 @@ registerWebpackJsonpCallback("mg-file", function (modules, utils) {
 
       modStr =
         modStr.slice(0, startIndex) + modified + modStr.slice(endIndex + 1);
-
-      (function () {
-        let index =
-          modStr.indexOf("get codeString(){") + "get codeString(){".length - 1;
-        const ast = utils.parse(modStr, index);
-        const { startIndex, endIndex } = ast;
-        ast.children[0].body = "";
-        const key = /const (\w)/.exec(ast.wraps[0])[1];
-        ast.wraps[0] += `();console.log('run');${key}.forEach((item) => {
-          const fills = item.fills || [];
-          fills.forEach((fill) => {
-            if (fill.image && fill.image.imageRef) {
-              const ref = fill.image.imageRef;
-              if (window.__upload_image_cache__ && window.__upload_image_cache__[ref]) {
-                fill.image.name = window.__upload_image_cache__[ref];
-              }
-            }
-          });
-        })`;
-        const modified = utils.stringify(ast);
-
-        modStr =
-          modStr.slice(0, startIndex) + modified + modStr.slice(endIndex + 1);
-      })();
 
       modules[key] = utils.str2fn(modStr);
     } else if (/getExportList\(\){/.test(modStr)) {
