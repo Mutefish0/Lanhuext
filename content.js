@@ -234,12 +234,6 @@ registerWebpackJsonpCallback("common-components", function (modules, utils) {
       modules[key] = utils.str2fn(modStr);
     } else if (/getExportList\(\){/.test(modStr)) {
       function exportAndUpload() {
-        const toast = this.$toast({
-          content: "正在上传",
-          persistent: !0,
-          disabledTransition: !0,
-          position: "bottom",
-        });
         const file = this.getExportList()[0];
         const formData = new FormData();
         formData.append("quality", "0.6-0.8");
@@ -250,12 +244,8 @@ registerWebpackJsonpCallback("common-components", function (modules, utils) {
           body: formData,
         }).then((resp) => {
           resp.json().then((data) => {
-            toast.clearToast();
             navigator.clipboard.writeText(data.file).then(() => {
-              this.$toast({
-                content: "上传成功，已复制 URL 到剪切板",
-                position: "bottom",
-              });
+              confirm("上传成功，已复制 URL 到剪切板");
             });
           });
         });
