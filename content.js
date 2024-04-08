@@ -178,13 +178,12 @@ registerWebpackJsonpCallback("app", function (modules, utils) {
 registerWebpackJsonpCallback("common-components", function (modules, utils) {
   for (let key in modules) {
     let modStr = modules[key].toString();
-
     if (/right-export-bar/.test(modStr)) {
       const arrStartIndex =
         modStr.indexOf('right-export-bar"') + 'right-export-bar"'.length;
       const ast = utils.parse(modStr, arrStartIndex);
 
-      console.log(ast);
+      console.log("ast:", ast);
 
       const { startIndex, endIndex } = ast;
       const [_, preview] = ast.children;
@@ -273,3 +272,127 @@ registerWebpackJsonpCallback("common-components", function (modules, utils) {
 
   return modules;
 });
+
+registerWebpackJsonpCallback("mg-design", function (modules, utils) {
+  for (let key in modules) {
+    let modStr = modules[key].toString();
+    if (/right-export-bar/.test(modStr)) {
+      const arrStartIndex =
+        modStr.indexOf('right-export-bar"') + 'right-export-bar"'.length;
+      const ast = utils.parse(modStr, arrStartIndex);
+
+      console.log("ast:", ast);
+
+      const { startIndex, endIndex } = ast;
+
+      const preview = ast.children[3];
+
+      preview.children[0].body = JSON.stringify({
+        staticClass: "preview",
+        style: {
+          gridArea: "auto",
+        },
+      });
+
+      ast.children.splice(2, 0, {
+        body: `
+        (
+          "MButton",
+          {
+            staticClass: "export-button_1",
+            attrs: {
+              type: "highlight",
+              size: "xs",
+              tabindex: "0",
+              asyncClick: this.exportAndUpload,
+            },
+            nativeOn: {
+              mouseup: function (e) {
+                e.stopPropagation();
+              },
+            },
+          },
+          [[this._v("导出到CDN")]],
+          2
+        )
+        `,
+        children: [],
+      });
+
+      ast.wraps.splice(2, 0, ",t");
+
+      const modified = utils.stringify(ast);
+
+      modStr =
+        modStr.slice(0, startIndex) + modified + modStr.slice(endIndex + 1);
+
+      modules[key] = utils.str2fn(modStr);
+    } else if (/getExportList\(\){/.test(modStr)) {
+      function exportAndUpload() {
+        const file = this.getExportList()[0];
+        const formData = new FormData();
+        formData.append("quality", "0.6-0.8");
+        formData.append("file", new Blob([file.buffer]), "export.png");
+
+        fetch("https://growth-bi-service-fe.in.taou.com/upload/cdn/", {
+          method: "POST",
+          body: formData,
+        }).then((resp) => {
+          resp.json().then((data) => {
+            navigator.clipboard.writeText(data.file).then(() => {
+              confirm("上传成功，已复制 URL 到剪切板");
+            });
+          });
+        });
+        fetch(
+          "https://maimai.cn/n/platform/api/public/news?e=lanhu_upload_cdn"
+        ).catch((e) => {});
+      }
+
+      const classStartIndex = modStr.indexOf("constructor()") - 1;
+      const ast = utils.parse(modStr, classStartIndex);
+
+      const { startIndex, endIndex } = ast;
+
+      ast.wraps[ast.wraps.length - 1] =
+        exportAndUpload.toString().replace(/^function/, "") + "}";
+
+      const modified = utils.stringify(ast);
+
+      modStr =
+        modStr.slice(0, startIndex) + modified + modStr.slice(endIndex + 1);
+
+      modules[key] = utils.str2fn(modStr);
+    }
+  }
+
+  return modules;
+});
+
+function matchStart(root, startIndex, path = [root]) {
+  if (root.startIndex === startIndex) {
+    return path;
+  } else if (root.children.length > 0) {
+    for (let child of root.children) {
+      path.unshift(child);
+      const result = matchStart(child, startIndex, path);
+      if (result) {
+        return result;
+      } else {
+        path.shift();
+      }
+    }
+  }
+  return null;
+}
+
+function batchReplace(source, replacements) {
+  const sorted = replacements.sort((a, b) => b.startIndex - a.startIndex);
+  for (let replacement of sorted) {
+    source =
+      source.slice(0, replacement.startIndex) +
+      replacement.content +
+      source.slice(replacement.endIndex);
+  }
+  return source;
+}
