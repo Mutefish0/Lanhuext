@@ -31,7 +31,7 @@ function coreInit() {
     },
 
     stringify: function (ast) {
-      if (ast.children.length > 0) {
+      if (ast.children && ast.children.length > 0) {
         const childChunks = [];
         for (let child of ast.children) {
           childChunks.push(utils.stringify(child));
@@ -281,8 +281,6 @@ registerWebpackJsonpCallback("mg-design", function (modules, utils) {
         modStr.indexOf('right-export-bar"') + 'right-export-bar"'.length;
       const ast = utils.parse(modStr, arrStartIndex);
 
-      console.log("ast:", ast);
-
       const { startIndex, endIndex } = ast;
 
       const preview = ast.children[3];
@@ -358,6 +356,48 @@ registerWebpackJsonpCallback("mg-design", function (modules, utils) {
         exportAndUpload.toString().replace(/^function/, "") + "}";
 
       const modified = utils.stringify(ast);
+
+      modStr =
+        modStr.slice(0, startIndex) + modified + modStr.slice(endIndex + 1);
+
+      modules[key] = utils.str2fn(modStr);
+    }
+  }
+
+  return modules;
+});
+
+registerWebpackJsonpCallback("mg-file", function (modules, utils) {
+  for (let key in modules) {
+    let modStr = modules[key].toString();
+    let index = modStr.indexOf("FREAM_CODE_TYPE_LIST=");
+    if (index > -1) {
+      const ast = utils.parse(modStr, index + "FREAM_CODE_TYPE_LIST=".length);
+      const { startIndex, endIndex } = ast;
+
+      ast.children.push(
+        {
+          body: JSON.stringify({
+            value: 375 / 393,
+            label: "393转375",
+          }),
+        },
+        {
+          body: JSON.stringify({
+            value: 750 / 393,
+            label: "393转750",
+          }),
+        }
+      );
+      ast.wraps.pop();
+      ast.wraps.push(",");
+      ast.wraps.push(",");
+      ast.wraps.push("]");
+
+      const modified = utils.stringify(ast);
+
+      const left = modStr.slice(startIndex - 20, startIndex);
+      const right = modStr.slice(endIndex + 1, endIndex + 1 + 20);
 
       modStr =
         modStr.slice(0, startIndex) + modified + modStr.slice(endIndex + 1);
