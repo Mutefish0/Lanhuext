@@ -130,6 +130,7 @@ function coreInit() {
     {
       webpack_install_hook: function () {
         const p = window.webpackJsonp.push;
+        window.ofetch = fetch;
         window.webpackJsonp.push = function (x) {
           const chunkId = x[0][0];
           const modules = x[1];
@@ -162,6 +163,91 @@ registerWebpackJsonpCallback("app", function (modules, utils) {
         "{",
         `{if(arguments[0].image.name){ return arguments[0].image.name; }`
       );
+
+      const modified = utils.stringify(ast);
+
+      modStr =
+        modStr.slice(0, startIndex) + modified + modStr.slice(endIndex + 1);
+
+      modules[key] = utils.str2fn(modStr);
+    } else if (/right-export-bar"/.test(modStr)) {
+      const arrStartIndex =
+        modStr.indexOf('right-export-bar"') + 'right-export-bar"'.length;
+      const ast = utils.parse(modStr, arrStartIndex);
+
+      console.log("ast", ast);
+
+      const { startIndex, endIndex } = ast;
+
+      const preview = ast.children[3];
+
+      preview.children[0].body = JSON.stringify({
+        staticClass: "preview",
+        style: {
+          gridArea: "auto",
+        },
+      });
+
+      ast.children.splice(2, 0, {
+        body: `
+        (
+          "MButton",
+          {
+            staticClass: "export-button_1",
+            attrs: {
+              type: "highlight",
+              size: "xs",
+              tabindex: "0",
+              asyncClick: this.exportAndUpload,
+            },
+            nativeOn: {
+              mouseup: function (e) {
+                e.stopPropagation();
+              },
+            },
+          },
+          [[this._v("导出到CDN")]],
+          2
+        )
+        `,
+        children: [],
+      });
+
+      ast.wraps.splice(2, 0, ",t");
+
+      const modified = utils.stringify(ast);
+
+      modStr =
+        modStr.slice(0, startIndex) + modified + modStr.slice(endIndex + 1);
+
+      modules[key] = utils.str2fn(modStr);
+    } else if (/getExportList\(\){/.test(modStr)) {
+      function exportAndUpload() {
+        const file = this.getExportList()[0];
+        const formData = new FormData();
+        formData.append("quality", "0.6-0.8");
+        formData.append("file", new Blob([file.buffer]), "export.png");
+        window
+          .ofetch("https://growth-bi-service-fe.in.taou.com/upload/cdn/", {
+            method: "POST",
+            body: formData,
+          })
+          .then((resp) => {
+            resp.json().then((data) => {
+              navigator.clipboard.writeText(data.file).then(() => {
+                confirm("上传成功，已复制 URL 到剪切板");
+              });
+            });
+          });
+      }
+
+      const classStartIndex = modStr.indexOf("constructor()") - 1;
+      const ast = utils.parse(modStr, classStartIndex);
+
+      const { startIndex, endIndex } = ast;
+
+      ast.wraps[ast.wraps.length - 1] =
+        exportAndUpload.toString().replace(/^function/, "") + "}";
 
       const modified = utils.stringify(ast);
 
@@ -281,6 +367,8 @@ registerWebpackJsonpCallback("mg-design", function (modules, utils) {
         modStr.indexOf('right-export-bar"') + 'right-export-bar"'.length;
       const ast = utils.parse(modStr, arrStartIndex);
 
+      console.log("ast", ast);
+
       const { startIndex, endIndex } = ast;
 
       const preview = ast.children[3];
@@ -374,6 +462,8 @@ registerWebpackJsonpCallback("mg-file", function (modules, utils) {
       const arrStartIndex =
         modStr.indexOf('right-export-bar"') + 'right-export-bar"'.length;
       const ast = utils.parse(modStr, arrStartIndex);
+
+      console.log("ast", ast);
 
       const { startIndex, endIndex } = ast;
 
